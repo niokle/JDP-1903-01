@@ -16,18 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Entity(name = "ORDERS")
+
 public class Order {
 
-    @Id
-    @GeneratedValue
-    @NotNull
     private Long orderId;
-
-    @Column(name = "ORDERS_DESCRIPTION")
     private String orderDescription;
-
-    @Column(name = "PRODUCT_LISTS")
     private List<ProductDto> productList;
 
 }
