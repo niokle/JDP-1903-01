@@ -36,4 +36,11 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    public Product(String name, String description, Double price, Long groupId) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.groupId = groupId;
+    }
 }
