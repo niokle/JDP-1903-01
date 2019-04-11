@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("ecommercee/cart")
 public class CartController {
     @PostMapping(value = "createNewCart")
-    public Long createNewCart(@RequestBody UserDto user) {
+    public Long createNewCart(@RequestParam Long userId) {
         CartDto cartDto = new CartDto(25L);
         return cartDto.getCartId();
     }
