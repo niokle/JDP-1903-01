@@ -35,4 +35,10 @@ public class User {
 
     @OneToMany(mappedBy = "user", targetEntity = Cart.class)
     private List<Cart> carts;
+
+    public User(String userName, String status, Long userKey) {
+        this.userName = userName;
+        this.status = status;
+        this.userKey = userKey;
+    }
 }
