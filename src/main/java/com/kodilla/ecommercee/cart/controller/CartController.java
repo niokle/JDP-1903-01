@@ -33,7 +33,7 @@ public class CartController {
     }
 
     @PostMapping(value = "createOrder")
-    public void createOrder(@RequestParam Long cartId) {
+    public void createOrder(@RequestParam Long cartId, @RequestParam String description) {
         //This method will be creating new order based upon Cart's current content
     }
 }
