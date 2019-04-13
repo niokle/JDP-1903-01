@@ -19,7 +19,6 @@ public class UserControllerTests {
         // given
         // when
         long result = userController.createUser("James Bond");
-
         // then
         Assert.assertEquals(1, result);
     }
@@ -29,7 +28,6 @@ public class UserControllerTests {
         // given
         // when
         long key = userController.generateKey(23L);
-
         // then
         Assert.assertEquals(12345678L, key);
 

@@ -2,7 +2,7 @@ package com.kodilla.ecommercee.cart.controller;
 
 import com.kodilla.ecommercee.cart.dto.CartDto;
 import com.kodilla.ecommercee.product.dto.ProductDto;
-import com.kodilla.ecommercee.user.domain.UserDto;
+import com.kodilla.ecommercee.user.dto.UserDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

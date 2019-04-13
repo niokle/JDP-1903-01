@@ -1,6 +1,6 @@
-package com.kodilla.ecommercee.group;
+package com.kodilla.ecommercee.group.repository;
 
-import com.kodilla.ecommercee.group.dao.GroupDao;
+import com.kodilla.ecommercee.group.repository.GroupRepository;
 import com.kodilla.ecommercee.group.domain.Group;
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.repository.ProductRepository;
@@ -18,7 +18,7 @@ import java.util.List;
 public class GroupEntityCrudOperationsTest {
 
     @Autowired
-    private GroupDao groupDao;
+    private GroupRepository groupRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -31,18 +31,18 @@ public class GroupEntityCrudOperationsTest {
         Group group3 = new Group("group 3", "group 3 desc");
 
         //when
-        int sizeGroupBeforeSave = groupDao.findAll().size();
-        groupDao.save(group1);
-        groupDao.save(group2);
-        groupDao.save(group3);
+        int sizeGroupBeforeSave = groupRepository.findAll().size();
+        groupRepository.save(group1);
+        groupRepository.save(group2);
+        groupRepository.save(group3);
 
         //then
-        Assert.assertEquals(sizeGroupBeforeSave + 3, groupDao.findAll().size());
+        Assert.assertEquals(sizeGroupBeforeSave + 3, groupRepository.findAll().size());
 
         //cleanup
-        groupDao.delete(group1);
-        groupDao.delete(group2);
-        groupDao.delete(group3);
+        groupRepository.delete(group1);
+        groupRepository.delete(group2);
+        groupRepository.delete(group3);
     }
 
     @Test
@@ -51,15 +51,15 @@ public class GroupEntityCrudOperationsTest {
         Group group1 = new Group("group 1", "group 1 desc");
 
         //when
-        groupDao.save(group1);
-        Long id1 = group1.getIdGroup();
-        Group savedGroup = groupDao.findById(id1).get();
+        groupRepository.save(group1);
+        Long id1 = group1.getGroupId();
+        Group savedGroup = groupRepository.findById(id1).get();
 
         //then
-        Assert.assertEquals(savedGroup.getNameOfGroup(), group1.getNameOfGroup());
+        Assert.assertEquals(savedGroup.getGroupName(), group1.getGroupName());
 
         //cleanup
-        groupDao.delete(group1);
+        groupRepository.delete(group1);
     }
 
     @Test
@@ -70,18 +70,18 @@ public class GroupEntityCrudOperationsTest {
         Group group3 = new Group("group 3", "group 3 desc");
 
         //when
-        groupDao.save(group1);
-        groupDao.save(group2);
-        groupDao.save(group3);
-        List<Group> groups = groupDao.findAll();
+        groupRepository.save(group1);
+        groupRepository.save(group2);
+        groupRepository.save(group3);
+        List<Group> groups = groupRepository.findAll();
 
         //then
         Assert.assertEquals(3, groups.size());
 
         //cleanup
-        groupDao.delete(group1);
-        groupDao.delete(group2);
-        groupDao.delete(group3);
+        groupRepository.delete(group1);
+        groupRepository.delete(group2);
+        groupRepository.delete(group3);
     }
 
     @Test
@@ -90,17 +90,17 @@ public class GroupEntityCrudOperationsTest {
         Group group1 = new Group("group 1", "group 1 desc");
 
         //when
-        groupDao.save(group1);
-        Long id1 = group1.getIdGroup();
+        groupRepository.save(group1);
+        Long id1 = group1.getGroupId();
         String newNameOfGroup = "renamed group 1";
-        group1.setNameOfGroup(newNameOfGroup);
-        groupDao.save(group1);
+        group1.setGroupName(newNameOfGroup);
+        groupRepository.save(group1);
 
         //then
-        Assert.assertEquals(newNameOfGroup, groupDao.findById(id1).get().getNameOfGroup());
+        Assert.assertEquals(newNameOfGroup, groupRepository.findById(id1).get().getGroupName());
 
         //cleanup
-        groupDao.delete(group1);
+        groupRepository.delete(group1);
     }
 
     @Test
@@ -108,22 +108,22 @@ public class GroupEntityCrudOperationsTest {
         //given
         Group group1 = new Group("group 1", "group 1 desc");
         Group group2 = new Group("group 2", "group 2 desc");
-        Long idGroup1 = group1.getIdGroup();
-        Product product1 = new Product("product 1", "product 1 desc", 100.00, idGroup1);
-        Long idGroup2 = group2.getIdGroup();
-        Product product2 = new Product("product 2", "product 2 desc", 200.00, idGroup2);
+        Long idGroup1 = group1.getGroupId();
+        Product product1 = new Product("product 1", "product 1 desc", 100.00, 1L, idGroup1);
+        Long idGroup2 = group2.getGroupId();
+        Product product2 = new Product("product 2", "product 2 desc", 200.00, 1L, idGroup2);
 
         //when
-        int sizeGroupsBeforeSave = groupDao.findAll().size();
-        groupDao.save(group1);
-        groupDao.save(group2);
-        int sizeGroupsBeforeDelete = groupDao.findAll().size();
+        int sizeGroupsBeforeSave = groupRepository.findAll().size();
+        groupRepository.save(group1);
+        groupRepository.save(group2);
+        int sizeGroupsBeforeDelete = groupRepository.findAll().size();
         productRepository.save(product1);
         productRepository.save(product2);
         int sizeProductsBeforeDeleteGroups = productRepository.findAll().size();
-        groupDao.delete(group1);
-        groupDao.delete(group2);
-        int sizeGroupsAfterDelete = groupDao.findAll().size();
+        groupRepository.delete(group1);
+        groupRepository.delete(group2);
+        int sizeGroupsAfterDelete = groupRepository.findAll().size();
         int sizeProductsAfterDeleteGroups = productRepository.findAll().size();
 
         //then

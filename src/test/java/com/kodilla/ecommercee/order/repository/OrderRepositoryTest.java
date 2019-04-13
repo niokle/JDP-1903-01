@@ -55,8 +55,12 @@ public class OrderRepositoryTest {
         Order testOrder = new Order();
         testOrder.setOrderDescription("Description");
         testOrder.setProductList(testProductList);
-        testProduct1.setOrder(testOrder);
-        testProduct2.setOrder(testOrder);
+
+        List<Order> testOrderList = new ArrayList<>();
+        testOrderList.add(testOrder);
+
+        testProduct1.setOrderList(testOrderList);
+        testProduct2.setOrderList(testOrderList);
         //When
         orderRepository.save(testOrder);
         productRepository.save(testProduct1);
