@@ -109,9 +109,9 @@ public class GroupEntityCrudOperationsTest {
         Group group1 = new Group("group 1", "group 1 desc");
         Group group2 = new Group("group 2", "group 2 desc");
         Long idGroup1 = group1.getIdGroup();
-        Product product1 = new Product("product 1", "product 1 desc", 100.00, idGroup1);
+        Product product1 = new Product("product 1", "product 1 desc", 100.00, 20L, idGroup1);
         Long idGroup2 = group2.getIdGroup();
-        Product product2 = new Product("product 2", "product 2 desc", 200.00, idGroup2);
+        Product product2 = new Product("product 2", "product 2 desc", 200.00, 20L, idGroup2);
 
         //when
         int sizeGroupsBeforeSave = groupDao.findAll().size();

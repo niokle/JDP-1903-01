@@ -51,7 +51,16 @@ public class Product {
         this.groupId = groupId;
     }
 
-    @ManyToMany
+    public Product(Long id, String name, String description, Double price, Long quantity, Long groupId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.groupId = groupId;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "join_carts_products",
             joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "product_id")},

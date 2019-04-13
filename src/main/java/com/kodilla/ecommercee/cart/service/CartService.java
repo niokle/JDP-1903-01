@@ -12,6 +12,7 @@ import com.kodilla.ecommercee.user.exception.UserNotFoundException;
 import com.kodilla.ecommercee.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.dc.pr.PRError;
 
 import java.util.List;
 
@@ -44,16 +45,25 @@ public class CartService {
     public Cart addProductToCart(Long productId, Long cartId) throws CartNotFoundException, ProductNotFoundException {
         Cart cart = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
-        cart.getProductList().add(product);
+        List<Product> productList = cart.getProductList();
+        productList.add(product);
+        cart.setProductList(productList);
         cartRepository.save(cart);
         return cart;
     }
 
-    public void deleteItemFromCart(Long productId, Long cartId) throws CartNotFoundException, ProductNotFoundException {
+    public Cart deleteItemFromCart(Long productId, Long cartId) throws CartNotFoundException, ProductNotFoundException {
         Cart cart = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
-        cart.getProductList().remove(product);
+        List<Product> productList = cart.getProductList();
+        List<Cart> cartList = product.getCartList();
+        cartList.remove(cart);
+        productList.remove(product);
+        cart.setProductList(productList);
+        product.setCartList(cartList);
         cartRepository.save(cart);
+        productRepository.save(product);
+        return cart;
     }
 
     public void createOrder(Long cartId, String description) throws CartNotFoundException {
