@@ -1,4 +1,4 @@
-package com.kodilla.ecommercee.group.dao;
+package com.kodilla.ecommercee.group.repository;
 
 import com.kodilla.ecommercee.group.domain.Group;
 import org.springframework.data.repository.CrudRepository;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface GroupDao extends CrudRepository<Group, Long> {
+public interface GroupRepository extends CrudRepository<Group, Long> {
     @Override
     List<Group> findAll();
 

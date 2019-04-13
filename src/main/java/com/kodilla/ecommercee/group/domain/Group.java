@@ -14,42 +14,42 @@ public final class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
-    private Long idGroup;
+    @Column(name = "id")
+    private Long groupId;
 
-    @Column(name = "NAME")
-    private String nameOfGroup;
+    @Column(name = "name")
+    private String groupName;
 
-    @Column(name = "DESCRIPTION")
-    private String descriptionOfGroup;
+    @Column(name = "description")
+    private String description;
 
-    public Group(String nameOfGroup, String descriptionOfGroup) {
-        this.nameOfGroup = nameOfGroup;
-        this.descriptionOfGroup = descriptionOfGroup;
+    public Group(String groupName, String description) {
+        this.groupName = groupName;
+        this.description = description;
     }
 
-    public Long getIdGroup() {
-        return idGroup;
+    public Long getGroupId() {
+        return groupId;
     }
 
-    public String getNameOfGroup() {
-        return nameOfGroup;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public String getDescriptionOfGroup() {
-        return descriptionOfGroup;
+    public String getDescription() {
+        return description;
     }
 
-    public void setIdGroup(Long idGroup) {
-        this.idGroup = idGroup;
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
-    public void setNameOfGroup(String nameOfGroup) {
-        this.nameOfGroup = nameOfGroup;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
-    public void setDescriptionOfGroup(String descriptionOfGroup) {
-        this.descriptionOfGroup = descriptionOfGroup;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 
