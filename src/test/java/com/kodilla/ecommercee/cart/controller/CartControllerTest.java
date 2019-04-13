@@ -4,6 +4,7 @@ import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.cart.dto.CartDto;
 import com.kodilla.ecommercee.cart.exception.CartNotFoundException;
 import com.kodilla.ecommercee.cart.repository.CartRepository;
+import com.kodilla.ecommercee.order.domain.Order;
 import com.kodilla.ecommercee.order.repository.OrderRepository;
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.dto.ProductDto;
@@ -13,7 +14,9 @@ import com.kodilla.ecommercee.user.domain.User;
 import com.kodilla.ecommercee.user.dto.UserDto;
 import com.kodilla.ecommercee.user.exception.UserNotFoundException;
 import com.kodilla.ecommercee.user.repository.UserRepository;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -60,6 +63,7 @@ public class CartControllerTest {
             Long cartId = cartController.createNewCart(user.getUserId());
             //Then
             assertEquals(user.getUserId(), cartRepository.findById(cartId).get().getUser().getUserId());
+            assertNotNull(cartId);
             LOGGER.info("Test OK");
             cartRepository.deleteById(cartId);
         } catch (UserNotFoundException u) {
@@ -217,4 +221,55 @@ public class CartControllerTest {
         }
     }
 
+    @Test
+    public void testCreateOrder() {
+        User user = new User();
+        userRepository.save(user);
+
+        Product testProduct1 = new Product("Test product 1", "Testing1", 111.0, 11L, 1L);
+        Product testProduct2 = new Product("Test product 2", "Testing2", 222.0, 22L, 2L);
+        Product testProduct3 = new Product("Test product 3", "Testing3", 333.0, 33L, 3L);
+        productRepository.save(testProduct1);
+        productRepository.save(testProduct2);
+        productRepository.save(testProduct3);
+
+        List<Product> productList = new ArrayList<>();
+        productList.add(testProduct1);
+        productList.add(testProduct2);
+        productList.add(testProduct3);
+
+        Cart cart = new Cart();
+
+        List<Cart> cartList = new ArrayList<>();
+        cartList.add(cart);
+
+        cart.setUser(user);
+        cart.setProductList(productList);
+        testProduct1.setCartList(cartList);
+        testProduct2.setCartList(cartList);
+        testProduct3.setCartList(cartList);
+
+        cartRepository.save(cart);
+        productRepository.save(testProduct1);
+        productRepository.save(testProduct2);
+        productRepository.save(testProduct3);
+
+        try {
+            cartController.createOrder(cart.getCartId(), "Test order");
+            Long orderID = orderRepository.findAll().get(0).getOrderId();
+            Order order = orderRepository.findById(orderID).get();
+            System.out.println("****************orderId " + orderID + "***********list" + order.getProductList().size());
+            assertEquals(3, orderRepository.findById(orderID).get().getProductList().size());
+            LOGGER.info("TEST OK");
+        } catch (CartNotFoundException c) {
+            LOGGER.error("TEST FAILED");
+        } finally {
+            productRepository.deleteById(testProduct1.getId());
+            productRepository.deleteById(testProduct2.getId());
+            productRepository.deleteById(testProduct3.getId());
+            cartRepository.deleteById(cart.getCartId());
+            orderRepository.delete(orderRepository.findAll().get(0));
+            userRepository.deleteById(user.getUserId());
+        }
+    }
 }
