@@ -14,8 +14,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -75,5 +73,4 @@ public class Product {
             inverseJoinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "order_id")}
             )
     private List<Order> orderList;
-
 }

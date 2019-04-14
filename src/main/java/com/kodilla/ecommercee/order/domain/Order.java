@@ -1,12 +1,7 @@
 package com.kodilla.ecommercee.order.domain;
 
-
-import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.product.domain.Product;
-
 import com.kodilla.ecommercee.user.domain.User;
-import lombok.*;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,4 +37,3 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 }
-

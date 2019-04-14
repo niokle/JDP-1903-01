@@ -17,11 +17,13 @@ public class OrderDbService {
         return orderRepository.findAll();
     }
 
-    public Order saveOrder(Order order) {
+    public Order saveOrder(final Order order) {
         return orderRepository.save(order);
     }
 
-    public Optional<Order> findOrderByID(Long id) {
+    public Optional<Order> findOrderByID(final Long id) {
         return orderRepository.findById(id);
     }
+
+    public void deleteOrder(final Long id) { orderRepository.deleteById(id);}
 }
