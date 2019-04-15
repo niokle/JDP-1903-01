@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -26,9 +27,10 @@ public class GroupEntityCrudOperationsTest {
     @Test
     public void createGroupTest() {
         //given
-        Group group1 = new Group("group 1", "group 1 desc");
-        Group group2 = new Group("group 2", "group 2 desc");
-        Group group3 = new Group("group 3", "group 3 desc");
+        List<Product> test = new ArrayList<>();
+        Group group1 = new Group(null,"TEST","test",test);
+        Group group2 = new Group(null,"TEST","test",test);
+        Group group3 = new Group(null,"TEST","test",test);
 
         //when
         int sizeGroupBeforeSave = groupRepository.findAll().size();
@@ -44,15 +46,16 @@ public class GroupEntityCrudOperationsTest {
         groupRepository.delete(group2);
         groupRepository.delete(group3);
     }
-
     @Test
     public void readGroupTest() {
         //given
-        Group group1 = new Group("group 1", "group 1 desc");
+        List<Product> test = new ArrayList<>();
+        Group group1 = new Group(null,"test","test",test);
 
         //when
         groupRepository.save(group1);
         Long id1 = group1.getGroupId();
+
         Group savedGroup = groupRepository.findById(id1).get();
 
         //then
@@ -62,12 +65,14 @@ public class GroupEntityCrudOperationsTest {
         groupRepository.delete(group1);
     }
 
+
     @Test
     public void readAllGroupTest() {
         //given
-        Group group1 = new Group("group 1", "group 1 desc");
-        Group group2 = new Group("group 2", "group 2 desc");
-        Group group3 = new Group("group 3", "group 3 desc");
+        List<Product> test = new ArrayList<>();
+        Group group1 = new Group(null,"TEST","test",test);
+        Group group2 = new Group(null,"TEST","test",test);
+        Group group3 = new Group(null,"TEST","test",test);
 
         //when
         groupRepository.save(group1);
@@ -87,10 +92,12 @@ public class GroupEntityCrudOperationsTest {
     @Test
     public void updateGroupTest() {
         //given
-        Group group1 = new Group("group 1", "group 1 desc");
+        List<Product> test = new ArrayList<>();
+        Group group1 = new Group(null,"TEST","test",test);
 
         //when
         groupRepository.save(group1);
+
         Long id1 = group1.getGroupId();
         String newNameOfGroup = "renamed group 1";
         group1.setGroupName(newNameOfGroup);
@@ -106,12 +113,15 @@ public class GroupEntityCrudOperationsTest {
     @Test
     public void deleteGroupTest() {
         //given
-        Group group1 = new Group("group 1", "group 1 desc");
+        List<Product> test = new ArrayList<>();
+
+        Group group1 = new Group("test","test2");
         Group group2 = new Group("group 2", "group 2 desc");
         Long idGroup1 = group1.getGroupId();
         Product product1 = new Product("product 1", "product 1 desc", 100.00, 1L, idGroup1);
         Long idGroup2 = group2.getGroupId();
         Product product2 = new Product("product 2", "product 2 desc", 200.00, 1L, idGroup2);
+
 
         //when
         int sizeGroupsBeforeSave = groupRepository.findAll().size();
@@ -135,4 +145,5 @@ public class GroupEntityCrudOperationsTest {
         productRepository.delete(product1);
         productRepository.delete(product2);
     }
+
 }

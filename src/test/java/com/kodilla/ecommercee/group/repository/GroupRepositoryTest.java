@@ -1,7 +1,6 @@
 package com.kodilla.ecommercee.group.repository;
 
 import com.kodilla.ecommercee.group.domain.Group;
-import com.kodilla.ecommercee.group.repository.GroupRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -21,7 +19,7 @@ public class GroupRepositoryTest {
     @Test
     public void saveGroupRepository() {
         //given
-        Group group = new Group("test", "test");
+        Group group = new Group();
 
         //when
         groupRepository.save(group);
@@ -39,6 +37,7 @@ public class GroupRepositoryTest {
         Group group = new Group("test", "test");
         Group group1 = new Group("test1", "test1");
         Group group2 = new Group("test2", "test2");
+
         groupRepository.save(group);
         groupRepository.save(group1);
         groupRepository.save(group2);
@@ -53,4 +52,5 @@ public class GroupRepositoryTest {
         groupRepository.deleteAll(showGroups);
 
     }
+
 }
