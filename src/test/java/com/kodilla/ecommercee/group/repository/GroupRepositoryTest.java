@@ -39,6 +39,7 @@ public class GroupRepositoryTest {
         Group group = new Group("test", "test");
         Group group1 = new Group("test1", "test1");
         Group group2 = new Group("test2", "test2");
+        int sizeGroupBeforeSave = groupRepository.findAll().size();
         groupRepository.save(group);
         groupRepository.save(group1);
         groupRepository.save(group2);
@@ -47,7 +48,7 @@ public class GroupRepositoryTest {
         List<Group> showGroups = groupRepository.findAll();
 
         //then
-        Assert.assertEquals(3, showGroups.size());
+        Assert.assertEquals(sizeGroupBeforeSave + 3, showGroups.size());
 
         //cleanUp
         groupRepository.deleteAll(showGroups);

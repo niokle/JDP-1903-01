@@ -70,13 +70,14 @@ public class GroupEntityCrudOperationsTest {
         Group group3 = new Group("group 3", "group 3 desc");
 
         //when
+        int sizeGroupBeforeSave = groupRepository.findAll().size();
         groupRepository.save(group1);
         groupRepository.save(group2);
         groupRepository.save(group3);
         List<Group> groups = groupRepository.findAll();
 
         //then
-        Assert.assertEquals(3, groups.size());
+        Assert.assertEquals(sizeGroupBeforeSave + 3, groups.size());
 
         //cleanup
         groupRepository.delete(group1);
