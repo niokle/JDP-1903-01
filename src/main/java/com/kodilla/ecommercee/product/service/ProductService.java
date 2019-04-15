@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.kodilla.ecommercee.product.service.FindProductsFunctions.*;
 
 @Service
 public class ProductService {
@@ -34,53 +35,11 @@ public class ProductService {
     public List<Product> findProducts(Long id, String partOfName, String partOfDescription, Double priceMin, Double priceMax) {
         List<Product> products = productRepository.findAll();
         return products.stream()
-                .filter(product -> filterFunction(product, id, partOfName, partOfDescription, priceMin, priceMax))
+                .filter(product -> isId(product, id))
+                .filter(product -> isPartOfName(product, partOfName))
+                .filter(product -> isPartOfDescription(product, partOfDescription))
+                .filter(product -> isPriceMin(product, priceMin))
+                .filter(product -> isPriceMax(product, priceMax))
                 .collect(Collectors.toList());
-    }
-
-    private static boolean filterFunction(Product product, Long id, String partOfName, String partOfDescription, Double priceMin, Double priceMax) {
-        boolean idResult;
-        boolean partOfNameResult;
-        boolean partOfDescriptionResult;
-        boolean priceMinResult;
-        boolean priceMaxResult;
-
-        if (id == null) {
-            idResult = true;
-        } else {
-            idResult = product.getId() == id;
-        }
-
-        if (partOfName == null) {
-            partOfNameResult = true;
-        } else {
-            partOfNameResult = product.getName().contains(partOfName);
-        }
-
-        if (partOfDescription == null) {
-            partOfDescriptionResult = true;
-        } else {
-            partOfDescriptionResult = product.getDescription().contains(partOfDescription);
-        }
-
-        if (priceMin == null && priceMax == null) {
-            priceMinResult = true;
-            priceMaxResult = true;
-        } else if (priceMin != null && priceMax != null) {
-            priceMinResult = product.getPrice() >= priceMin;
-            priceMaxResult = product.getPrice() <= priceMax;
-        } else {
-            if (priceMin == null) {
-                priceMinResult = true;
-            } else {
-                priceMinResult = product.getPrice() >= priceMin;
-            }
-            if (priceMax == null) {
-                priceMaxResult = true;
-            } else {
-                priceMaxResult = product.getPrice() >= priceMax;
-            }
-        }
-        return idResult && partOfNameResult && partOfDescriptionResult && priceMinResult && priceMaxResult;
     }
 }

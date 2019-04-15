@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.product.controller;
 
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.dto.ProductDto;
+import com.kodilla.ecommercee.product.service.FindProductsParameters;
 import com.kodilla.ecommercee.product.service.ProductService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -130,5 +131,72 @@ public class ProductControllerTest {
 
         //then
         Assert.assertEquals(numberOfProductsBeforeAdd, productService.getProducts().size());
+    }
+
+    @Test
+    public void testFindProducts() {
+        //given
+        Product product1 = new Product("skarpety", "skarpety jedna zielona i jedna czerwona", 100.00, 1L, 1L);
+        Product product2 = new Product("kurtka zimowa", "kurtka puchowa zielona", 200.00, 2L, 2L);
+        Product product3 = new Product("spodnie", "spodnie w żółte pasy", 300.00, 3L, 3L);
+        Product product4 = new Product("bluza", "bluza czerwona puchowa", 400.00, 4L, 4L);
+        Product product5 = new Product("bluza z kapturem", "bluza zielona pikowana", 500.00, 5L, 5L);
+        Product product6 = new Product("kurtka letnia", "kurtka w żółte rąby pikowana", 600.00, 6L, 6L);
+
+        //when
+        productService.saveProduct(product1);
+        productService.saveProduct(product2);
+        productService.saveProduct(product3);
+        productService.saveProduct(product4);
+        productService.saveProduct(product5);
+        productService.saveProduct(product6);
+
+        String searchName1 = "kurtka";
+        List<ProductDto> productsDto1 = productController.findProducts(new FindProductsParameters(null, searchName1, null, null, null));
+        int searchResult1 = 2;
+        String searchDescription2 = "zielona";
+        List<ProductDto> productsDto2 = productController.findProducts(new FindProductsParameters(null, null, searchDescription2, null, null));
+        int searchResult2 = 3;
+        Double searchPriceMin3 = 199.99;
+        Double searchPriceMax3 = 523.30;
+        List<ProductDto> productsDto3 = productController.findProducts(new FindProductsParameters(null, null, null, searchPriceMin3, searchPriceMax3));
+        int searchResult3 = 4;
+        String searchName4 = "bluza";
+        String searchDescription4 = "pikowana";
+        List<ProductDto> productsDto4 = productController.findProducts(new FindProductsParameters(null, searchName4, searchDescription4, null, null));
+        int searchResult4 = 1;
+        String searchDescription5 = "żółte";
+        Double searchPriceMin5 = 300.01;
+        Double searchPriceMax5 = 600.00;
+        List<ProductDto> productsDto5 = productController.findProducts(new FindProductsParameters(null, null, searchDescription5, searchPriceMin5, searchPriceMax5));
+        int searchResult5 = 1;
+        String searchName6 = "ble ble ble";
+        List<ProductDto> productsDto6 = productController.findProducts(new FindProductsParameters(null, searchName6, null, null, null));
+        int searchResult6 = 0;
+        String searchDescription7 = "żółte";
+        Double searchPriceMax7 = 400.00;
+        List<ProductDto> productsDto7 = productController.findProducts(new FindProductsParameters(null, null, searchDescription7, null, searchPriceMax7));
+        int searchResult7 = 1;
+        Double searchPriceMax8 = 400.00;
+        List<ProductDto> productsDto8 = productController.findProducts(new FindProductsParameters(null, null, null, null, searchPriceMax8));
+        int searchResult8 = 4;
+
+        //then
+        Assert.assertEquals(searchResult1, productsDto1.size());
+        Assert.assertEquals(searchResult2, productsDto2.size());
+        Assert.assertEquals(searchResult3, productsDto3.size());
+        Assert.assertEquals(searchResult4, productsDto4.size());
+        Assert.assertEquals(searchResult5, productsDto5.size());
+        Assert.assertEquals(searchResult6, productsDto6.size());
+        Assert.assertEquals(searchResult7, productsDto7.size());
+        Assert.assertEquals(searchResult8, productsDto8.size());
+
+        //cleanup
+        productService.deleteProduct(product1.getId());
+        productService.deleteProduct(product2.getId());
+        productService.deleteProduct(product3.getId());
+        productService.deleteProduct(product4.getId());
+        productService.deleteProduct(product5.getId());
+        productService.deleteProduct(product6.getId());
     }
 }

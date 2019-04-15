@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.product.controller;
 
 import com.kodilla.ecommercee.product.dto.ProductDto;
 import com.kodilla.ecommercee.product.mapper.ProductMapper;
+import com.kodilla.ecommercee.product.service.FindProductsParameters;
 import com.kodilla.ecommercee.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,13 @@ public class ProductController {
     @DeleteMapping(value = "deleteProduct")
     public void deleteProduct(@RequestParam Long id) {
         productService.deleteProduct(id);
+    }
+
+    @GetMapping(value = "findProducts", consumes = APPLICATION_JSON_VALUE)
+    public List<ProductDto> findProducts(@RequestBody FindProductsParameters findProductsParameters) {
+        return productMapper.mapProductsListToProductDtosList(productService.findProducts(findProductsParameters.getId(),
+                findProductsParameters.getPartOfName(), findProductsParameters.getPartOfDescription(),
+                findProductsParameters.getPriceMin(), findProductsParameters.getPriceMax()));
     }
 }
 

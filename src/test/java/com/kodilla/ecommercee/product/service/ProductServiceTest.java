@@ -67,6 +67,13 @@ public class ProductServiceTest {
         String searchName6 = "ble ble ble";
         List<Product> products6 = productService.findProducts(null, searchName6, null, null, null);
         int searchResult6 = 0;
+        String searchDescription7 = "żółte";
+        Double searchPriceMax7 = 400.00;
+        List<Product> products7 = productService.findProducts(null, null, searchDescription7, null, searchPriceMax7);
+        int searchResult7 = 1;
+        Double searchPriceMax8 = 400.00;
+        List<Product> products8 = productService.findProducts(null, null, null, null, searchPriceMax8);
+        int searchResult8 = 4;
 
         //then
         Assert.assertEquals(searchResult1, products1.size());
@@ -75,6 +82,8 @@ public class ProductServiceTest {
         Assert.assertEquals(searchResult4, products4.size());
         Assert.assertEquals(searchResult5, products5.size());
         Assert.assertEquals(searchResult6, products6.size());
+        Assert.assertEquals(searchResult7, products7.size());
+        Assert.assertEquals(searchResult8, products8.size());
 
         //cleanup
         productRepository.delete(product1);
