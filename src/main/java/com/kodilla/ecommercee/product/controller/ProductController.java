@@ -47,9 +47,7 @@ public class ProductController {
 
     @GetMapping(value = "findProducts", consumes = APPLICATION_JSON_VALUE)
     public List<ProductDto> findProducts(@RequestBody FindProductsParameters findProductsParameters) {
-        return productMapper.mapProductsListToProductDtosList(productService.findProducts(findProductsParameters.getId(),
-                findProductsParameters.getPartOfName(), findProductsParameters.getPartOfDescription(),
-                findProductsParameters.getPriceMin(), findProductsParameters.getPriceMax()));
+        return productMapper.mapProductsListToProductDtosList(productService.findProducts(findProductsParameters));
     }
 }
 

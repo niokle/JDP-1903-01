@@ -32,14 +32,14 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public List<Product> findProducts(Long id, String partOfName, String partOfDescription, Double priceMin, Double priceMax) {
+    public List<Product> findProducts(FindProductsParameters findProductsParameters) {
         List<Product> products = productRepository.findAll();
         return products.stream()
-                .filter(product -> isId(product, id))
-                .filter(product -> isPartOfName(product, partOfName))
-                .filter(product -> isPartOfDescription(product, partOfDescription))
-                .filter(product -> isPriceMin(product, priceMin))
-                .filter(product -> isPriceMax(product, priceMax))
+                .filter(product -> isId(product, findProductsParameters.getId()))
+                .filter(product -> isPartOfName(product, findProductsParameters.getPartOfName()))
+                .filter(product -> isPartOfDescription(product, findProductsParameters.getPartOfDescription()))
+                .filter(product -> isPriceMin(product, findProductsParameters.getPriceMin()))
+                .filter(product -> isPriceMax(product, findProductsParameters.getPriceMax()))
                 .collect(Collectors.toList());
     }
 }

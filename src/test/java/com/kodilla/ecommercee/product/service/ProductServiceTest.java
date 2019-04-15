@@ -46,33 +46,33 @@ public class ProductServiceTest {
         productRepository.save(product6);
 
         String searchName1 = "kurtka";
-        List<Product> products1 = productService.findProducts(null, searchName1, null, null, null);
+        List<Product> products1 = productService.findProducts(new FindProductsParameters(null, searchName1, null, null, null));
         int searchResult1 = 2;
         String searchDescription2 = "zielona";
-        List<Product> products2 = productService.findProducts(null, null, searchDescription2, null, null);
+        List<Product> products2 = productService.findProducts(new FindProductsParameters(null, null, searchDescription2, null, null));
         int searchResult2 = 3;
         Double searchPriceMin3 = 199.99;
         Double searchPriceMax3 = 523.30;
-        List<Product> products3 = productService.findProducts(null, null, null, searchPriceMin3, searchPriceMax3);
+        List<Product> products3 = productService.findProducts(new FindProductsParameters(null, null, null, searchPriceMin3, searchPriceMax3));
         int searchResult3 = 4;
         String searchName4 = "bluza";
         String searchDescription4 = "pikowana";
-        List<Product> products4 = productService.findProducts(null, searchName4, searchDescription4, null, null);
+        List<Product> products4 = productService.findProducts(new FindProductsParameters(null, searchName4, searchDescription4, null, null));
         int searchResult4 = 1;
         String searchDescription5 = "żółte";
         Double searchPriceMin5 = 300.01;
         Double searchPriceMax5 = 600.00;
-        List<Product> products5 = productService.findProducts(null, null, searchDescription5, searchPriceMin5, searchPriceMax5);
+        List<Product> products5 = productService.findProducts(new FindProductsParameters(null, null, searchDescription5, searchPriceMin5, searchPriceMax5));
         int searchResult5 = 1;
         String searchName6 = "ble ble ble";
-        List<Product> products6 = productService.findProducts(null, searchName6, null, null, null);
+        List<Product> products6 = productService.findProducts(new FindProductsParameters(null, searchName6, null, null, null));
         int searchResult6 = 0;
         String searchDescription7 = "żółte";
         Double searchPriceMax7 = 400.00;
-        List<Product> products7 = productService.findProducts(null, null, searchDescription7, null, searchPriceMax7);
+        List<Product> products7 = productService.findProducts(new FindProductsParameters(null, null, searchDescription7, null, searchPriceMax7));
         int searchResult7 = 1;
         Double searchPriceMax8 = 400.00;
-        List<Product> products8 = productService.findProducts(null, null, null, null, searchPriceMax8);
+        List<Product> products8 = productService.findProducts(new FindProductsParameters(null, null, null, null, searchPriceMax8));
         int searchResult8 = 4;
 
         //then
