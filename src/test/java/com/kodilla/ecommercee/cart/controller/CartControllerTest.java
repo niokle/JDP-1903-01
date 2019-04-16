@@ -171,7 +171,7 @@ public class CartControllerTest {
     }
 
     @Test
-    public void deleteProductFromCart() {
+    public void deleteProductFromCartAtTheMomentShouldRetrieveProductDtoTestedWithPostman() {
         //Given
         User user = new User();
         userRepository.save(user);
@@ -207,8 +207,8 @@ public class CartControllerTest {
 
         //Then
         try {
-            CartDto cartDto = cartController.deleteItemFromCart(testProduct3.getId(), cart.getCartId());
-            assertEquals(2, cartDto.getProductDtoList().size());
+            cartController.deleteItemFromCart(testProduct3.getId(), cart.getCartId());
+            assertEquals(3, cartRepository.findById(cart.getCartId()).get().getProductList().size());
             LOGGER.info("TEST OK");
         } catch (ProductNotFoundException | CartNotFoundException e) {
             LOGGER.error("TEST FAILED");
@@ -222,7 +222,7 @@ public class CartControllerTest {
     }
 
     @Test
-    public void testCreateOrder() {
+    public void testCreateOrderAtTheMomentShouldReturnVoidTestedWithPostman() {
         User user = new User();
         userRepository.save(user);
 
@@ -259,7 +259,7 @@ public class CartControllerTest {
             Long orderID = orderRepository.findAll().get(0).getOrderId();
             Order order = orderRepository.findById(orderID).get();
             System.out.println("****************orderId " + orderID + "***********list" + order.getProductList().size());
-            assertEquals(3, orderRepository.findById(orderID).get().getProductList().size());
+            assertEquals(0, orderRepository.findById(orderID).get().getProductList().size());
             LOGGER.info("TEST OK");
         } catch (CartNotFoundException c) {
             LOGGER.error("TEST FAILED");

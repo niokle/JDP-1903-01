@@ -57,7 +57,7 @@ public class CartService {
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
         List<Product> productList = cart.getProductList();
         List<Cart> cartList = product.getCartList();
-        cartList.remove(cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new));
+        cartList.remove(cart);
         productList.remove(product);
         cart.setProductList(productList);
         product.setCartList(cartList);

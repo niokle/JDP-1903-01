@@ -44,8 +44,8 @@ public class CartController {
     }
 
     @DeleteMapping(value = "deleteItem")
-    public CartDto deleteItemFromCart(@RequestParam Long productId, @RequestParam Long cartId) throws CartNotFoundException, ProductNotFoundException {
-        return cartMapper.mapToCartDto(service.deleteItemFromCart(productId, cartId));
+    public void deleteItemFromCart(@RequestParam Long productId, @RequestParam Long cartId) throws CartNotFoundException, ProductNotFoundException {
+        service.deleteItemFromCart(productId, cartId);
     }
 
     @PostMapping(value = "createOrder")
