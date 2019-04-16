@@ -12,7 +12,6 @@ import com.kodilla.ecommercee.user.exception.UserNotFoundException;
 import com.kodilla.ecommercee.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.dc.pr.PRError;
 
 import java.util.List;
 
