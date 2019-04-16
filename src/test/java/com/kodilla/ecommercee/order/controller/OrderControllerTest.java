@@ -1,7 +1,6 @@
 package com.kodilla.ecommercee.order.controller;
 
 import com.kodilla.ecommercee.order.dto.OrderDto;
-import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.dto.ProductDto;
 import org.junit.Assert;
 import org.junit.Test;

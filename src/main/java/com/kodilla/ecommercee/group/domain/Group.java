@@ -1,27 +1,42 @@
 package com.kodilla.ecommercee.group.domain;
 
+import com.kodilla.ecommercee.product.domain.Product;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+
 @Entity
-@Table(name = "groups")
+@Table(name = "products_groups")
 public final class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "group_id")
     private Long groupId;
 
-    @Column(name = "name")
+    @Column(name = "group_name")
     private String groupName;
 
-    @Column(name = "description")
+    @Column(name = "group_description")
     private String description;
+
+    @ManyToMany(
+            targetEntity = Product.class,
+            mappedBy = "groupList",
+            fetch = FetchType.EAGER
+    )
+    private List<Product> productList = new ArrayList<>();
 
     public Group(String groupName, String description) {
         this.groupName = groupName;
@@ -51,6 +66,5 @@ public final class Group {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
 }
