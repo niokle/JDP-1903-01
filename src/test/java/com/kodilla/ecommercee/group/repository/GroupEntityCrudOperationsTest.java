@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.group.repository;
 
-import com.kodilla.ecommercee.group.repository.GroupRepository;
 import com.kodilla.ecommercee.group.domain.Group;
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.repository.ProductRepository;
@@ -10,10 +9,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class GroupEntityCrudOperationsTest {
@@ -33,13 +34,12 @@ public class GroupEntityCrudOperationsTest {
         Group group3 = new Group(null,"TEST","test",test);
 
         //when
-        int sizeGroupBeforeSave = groupRepository.findAll().size();
         groupRepository.save(group1);
         groupRepository.save(group2);
         groupRepository.save(group3);
 
         //then
-        Assert.assertEquals(sizeGroupBeforeSave + 3, groupRepository.findAll().size());
+        Assert.assertEquals(3, groupRepository.findAll().size());
 
         //cleanup
         groupRepository.delete(group1);
@@ -75,14 +75,13 @@ public class GroupEntityCrudOperationsTest {
         Group group3 = new Group(null,"TEST","test",test);
 
         //when
-        int sizeGroupBeforeSave = groupRepository.findAll().size();
         groupRepository.save(group1);
         groupRepository.save(group2);
         groupRepository.save(group3);
         List<Group> groups = groupRepository.findAll();
 
         //then
-        Assert.assertEquals(sizeGroupBeforeSave + 3, groups.size());
+        Assert.assertEquals(3, groups.size());
 
         //cleanup
         groupRepository.delete(group1);

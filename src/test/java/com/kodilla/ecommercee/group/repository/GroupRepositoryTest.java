@@ -8,10 +8,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
+@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class GroupRepositoryTest {
@@ -39,7 +40,6 @@ public class GroupRepositoryTest {
         Group group = new Group("test", "test");
         Group group1 = new Group("test1", "test1");
         Group group2 = new Group("test2", "test2");
-        int sizeGroupBeforeSave = groupRepository.findAll().size();
         groupRepository.save(group);
         groupRepository.save(group1);
         groupRepository.save(group2);
@@ -48,7 +48,7 @@ public class GroupRepositoryTest {
         List<Group> showGroups = groupRepository.findAll();
 
         //then
-        Assert.assertEquals(sizeGroupBeforeSave + 3, showGroups.size());
+        Assert.assertEquals(3, showGroups.size());
 
         //cleanUp
         groupRepository.deleteAll(showGroups);
