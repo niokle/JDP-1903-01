@@ -7,6 +7,7 @@ import com.kodilla.ecommercee.product.dto.ProductDto;
 import com.kodilla.ecommercee.product.mapper.ProductMapper;
 import com.kodilla.ecommercee.user.domain.User;
 import com.kodilla.ecommercee.user.dto.UserDto;
+import com.kodilla.ecommercee.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,17 +18,16 @@ public class CartMapper {
     @Autowired
     private ProductMapper mapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
     public Cart mapToCart(final CartDto cartDto) {
         return new Cart(
                 cartDto.getCartId(),
                 cartDto.getProductDtoList().stream()
                     .map(productDto -> mapper.mapProductDtoToProduct(productDto))
                     .collect(Collectors.toList()),
-                new User(
-                        cartDto.getUserDto().getUserName(),
-                        cartDto.getUserDto().getStatus(),
-                        cartDto.getUserDto().getUserKey()
-                )
+                userMapper.mapUserDtoToUser(cartDto.getUserDto())
         );
     }
 
@@ -37,12 +37,7 @@ public class CartMapper {
                 cart.getProductList().stream()
                         .map(product -> mapper.mapProductToProductDto(product))
                         .collect(Collectors.toList()),
-                new UserDto(
-                        cart.getUser().getUserId(),
-                        cart.getUser().getUserName(),
-                        cart.getUser().getStatus(),
-                        cart.getUser().getUserKey()
-                )
+                userMapper.mapUserToUserDto(cart.getUser())
         );
     }
 }

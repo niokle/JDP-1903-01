@@ -257,8 +257,6 @@ public class CartControllerTest {
         try {
             cartController.createOrder(cart.getCartId(), "Test order");
             Long orderID = orderRepository.findAll().get(0).getOrderId();
-            Order order = orderRepository.findById(orderID).get();
-            System.out.println("****************orderId " + orderID + "***********list" + order.getProductList().size());
             assertEquals(0, orderRepository.findById(orderID).get().getProductList().size());
             LOGGER.info("TEST OK");
         } catch (CartNotFoundException c) {

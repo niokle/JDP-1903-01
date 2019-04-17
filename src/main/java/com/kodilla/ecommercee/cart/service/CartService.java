@@ -37,13 +37,13 @@ public class CartService {
     }
 
     public List<Product> getProducts(Long cartId) throws CartNotFoundException {
-        Cart cart = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
+        Cart cart = findCartUsingId(cartId);
         return cart.getProductList();
     }
 
     public Cart addProductToCart(Long productId, Long cartId) throws CartNotFoundException, ProductNotFoundException {
-        Cart cart = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
-        Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
+        Cart cart = findCartUsingId(cartId);
+        Product product = findProductUsingProductId(productId);
         List<Product> productList = cart.getProductList();
         productList.add(product);
         cart.setProductList(productList);
@@ -52,11 +52,14 @@ public class CartService {
     }
 
     public Cart deleteItemFromCart(Long productId, Long cartId) throws CartNotFoundException, ProductNotFoundException {
-        Cart cart = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
-        Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
+        Cart cart = findCartUsingId(cartId);
+        Product product = findProductUsingProductId(productId);
         List<Product> productList = cart.getProductList();
+        List<Cart> cartList = product.getCartList();
+        cartList.remove(cart);
         productList.remove(product);
         cart.setProductList(productList);
+        product.setCartList(cartList);
         cartRepository.save(cart);
         productRepository.save(product);
         return cart;
@@ -65,8 +68,16 @@ public class CartService {
     public void createOrder(Long cartId, String description) throws CartNotFoundException {
         Order order = new Order();
         order.setOrderDescription(description);
-        order.setProductList(cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new).getProductList());
-        order.setUser(cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new).getUser());
+        order.setProductList(findCartUsingId(cartId).getProductList());
+        order.setUser(findCartUsingId(cartId).getUser());
         orderRepository.save(order);
+    }
+
+    private Cart findCartUsingId(Long cartId) throws CartNotFoundException {
+        return cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
+    }
+
+    private Product findProductUsingProductId(Long productId) throws ProductNotFoundException {
+        return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
     }
 }

@@ -46,7 +46,7 @@ public class Product {
     )
     private List<Group> groupList;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "join_carts_products",
             joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "product_id")},
