@@ -48,7 +48,7 @@ public class Product {
             joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "product_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "group_id")}
     )
-    private List<Group> groupList;
+    private List<Group> groupList = new ArrayList<>();
 
     public Product(String name, String description, Double price, Long quantity, Long groupId) {
 
@@ -82,6 +82,6 @@ public class Product {
                 joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "product_id")},
                 inverseJoinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "order_id")}
         )
-        private List<Order> orderList;
+        private List<Order> orderList = new ArrayList<>();
 
 }
