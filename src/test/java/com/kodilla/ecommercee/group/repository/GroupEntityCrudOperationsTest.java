@@ -122,7 +122,6 @@ public class GroupEntityCrudOperationsTest {
         Long idGroup2 = group2.getGroupId();
         Product product2 = new Product("product 2", "product 2 desc", 200.00, 1L, idGroup2);
 
-
         //when
         int sizeGroupsBeforeSave = groupRepository.findAll().size();
         groupRepository.save(group1);
