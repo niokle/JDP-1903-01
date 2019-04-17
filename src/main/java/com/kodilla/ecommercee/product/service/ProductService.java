@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.kodilla.ecommercee.product.service.FindProductsFunctions.*;
+import static com.kodilla.ecommercee.product.service.ProductsSearchFunctions.*;
 
 @Service
 public class ProductService {
@@ -32,14 +32,14 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public List<Product> findProducts(FindProductsParameters findProductsParameters) {
+    public List<Product> findProducts(ProductsSearchParameters productsSearchParameters) {
         List<Product> products = productRepository.findAll();
         return products.stream()
-                .filter(product -> isId(product, findProductsParameters.getId()))
-                .filter(product -> isPartOfName(product, findProductsParameters.getPartOfName()))
-                .filter(product -> isPartOfDescription(product, findProductsParameters.getPartOfDescription()))
-                .filter(product -> isPriceMin(product, findProductsParameters.getPriceMin()))
-                .filter(product -> isPriceMax(product, findProductsParameters.getPriceMax()))
+                .filter(product -> hasId(product, productsSearchParameters.getId()))
+                .filter(product -> containsName(product, productsSearchParameters.getPartOfName()))
+                .filter(product -> containsDescription(product, productsSearchParameters.getPartOfDescription()))
+                .filter(product -> hasPriceMin(product, productsSearchParameters.getPriceMin()))
+                .filter(product -> hasPriceMax(product, productsSearchParameters.getPriceMax()))
                 .collect(Collectors.toList());
     }
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class FindProductsParameters {
+public class ProductsSearchParameters {
     private Long id;
     private String partOfName;
     private String partOfDescription;

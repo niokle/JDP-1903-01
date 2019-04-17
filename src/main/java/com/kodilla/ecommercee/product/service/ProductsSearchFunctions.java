@@ -2,8 +2,8 @@ package com.kodilla.ecommercee.product.service;
 
 import com.kodilla.ecommercee.product.domain.Product;
 
-public class FindProductsFunctions {
-    public static boolean isId(Product product, Long id) {
+public class ProductsSearchFunctions {
+    public static boolean hasId(Product product, Long id) {
         boolean result = true;
         if (id != null) {
             result = product.getId() == id;
@@ -11,23 +11,23 @@ public class FindProductsFunctions {
         return result;
     }
 
-    public static boolean isPartOfName(Product product, String partOfName) {
+    public static boolean containsName(Product product, String partOfName) {
         boolean result = true;
         if (partOfName != null) {
-            result = product.getName().contains(partOfName);
+            result = product.getName().toLowerCase().contains(partOfName.toLowerCase());
         }
         return result;
     }
 
-    public static boolean isPartOfDescription(Product product, String partOfDescription) {
+    public static boolean containsDescription(Product product, String partOfDescription) {
         boolean result = true;
         if (partOfDescription != null) {
-            result = product.getDescription().contains(partOfDescription);
+            result = product.getDescription().toLowerCase().contains(partOfDescription.toLowerCase());
         }
         return result;
     }
 
-    public static boolean isPriceMin(Product product, Double priceMin) {
+    public static boolean hasPriceMin(Product product, Double priceMin) {
         boolean result = true;
         if (priceMin != null) {
             result = product.getPrice() >= priceMin;
@@ -35,7 +35,7 @@ public class FindProductsFunctions {
         return result;
     }
 
-    public static boolean isPriceMax(Product product, Double priceMax) {
+    public static boolean hasPriceMax(Product product, Double priceMax) {
         boolean result = true;
         if (priceMax != null) {
             result = product.getPrice() <= priceMax;
