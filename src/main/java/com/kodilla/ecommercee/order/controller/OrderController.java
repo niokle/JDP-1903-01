@@ -29,8 +29,8 @@ public class OrderController {
     }
 
     @PostMapping(value = "createOrder", consumes = APPLICATION_JSON_VALUE)
-    public void createOrder(@RequestBody OrderDto orderDto) {
-        orderDbService.saveOrder(orderMapper.mapToOrder(orderDto));
+    public Long createOrder(@RequestBody OrderDto orderDto) {
+        return orderDbService.saveOrder(orderMapper.mapToOrder(orderDto)).getOrderId();
     }
 
     @PutMapping(value = "updateOrder")

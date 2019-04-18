@@ -36,4 +36,10 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Order(String orderDescription, List<Product> productList, User user) {
+        this.orderDescription = orderDescription;
+        this.productList = productList;
+        this.user = user;
+    }
 }

@@ -42,5 +42,4 @@ public class User {
             mappedBy = "user",
             fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
-
 }
