@@ -171,7 +171,7 @@ public class CartControllerTest {
     }
 
     @Test
-    public void deleteProductFromCartAtTheMomentShouldRetrieveProductDtoTestedWithPostman() {
+    public void deleteProductFromCart() {
         //Given
         User user = new User();
         userRepository.save(user);
@@ -208,7 +208,7 @@ public class CartControllerTest {
         //Then
         try {
             cartController.deleteItemFromCart(testProduct3.getId(), cart.getCartId());
-            assertEquals(3, cartRepository.findById(cart.getCartId()).get().getProductList().size());
+            assertEquals(2, cartRepository.findById(cart.getCartId()).get().getProductList().size());
             LOGGER.info("TEST OK");
         } catch (ProductNotFoundException | CartNotFoundException e) {
             LOGGER.error("TEST FAILED");
@@ -222,7 +222,7 @@ public class CartControllerTest {
     }
 
     @Test
-    public void testCreateOrderAtTheMomentShouldReturnVoidTestedWithPostman() {
+    public void testCreateOrder() {
         User user = new User();
         userRepository.save(user);
 
@@ -257,7 +257,8 @@ public class CartControllerTest {
         try {
             cartController.createOrder(cart.getCartId(), "Test order");
             Long orderID = orderRepository.findAll().get(0).getOrderId();
-            assertEquals(0, orderRepository.findById(orderID).get().getProductList().size());
+            List<Product> actualProductListInOrder = orderRepository.findById(orderID).get().getProductList();
+            assertEquals(3, actualProductListInOrder.size());
             LOGGER.info("TEST OK");
         } catch (CartNotFoundException c) {
             LOGGER.error("TEST FAILED");
@@ -266,7 +267,7 @@ public class CartControllerTest {
             productRepository.deleteById(testProduct2.getId());
             productRepository.deleteById(testProduct3.getId());
             cartRepository.deleteById(cart.getCartId());
-            orderRepository.delete(orderRepository.findAll().get(0));
+            orderRepository.deleteAll();
             userRepository.deleteById(user.getUserId());
         }
     }
