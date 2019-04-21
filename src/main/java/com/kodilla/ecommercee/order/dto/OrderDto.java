@@ -18,4 +18,10 @@ public class OrderDto {
     private String orderDescription;
     private List<Product> productList;
     private User user;
+
+    public OrderDto(String orderDescription, List<Product> productList, User user) {
+        this.orderDescription = orderDescription;
+        this.productList = productList;
+        this.user = user;
+    }
 }
