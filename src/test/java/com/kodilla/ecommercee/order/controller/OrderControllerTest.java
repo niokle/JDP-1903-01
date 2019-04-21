@@ -8,6 +8,7 @@ import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.service.ProductService;
 import com.kodilla.ecommercee.user.domain.User;
 import com.kodilla.ecommercee.user.repository.UserRepository;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

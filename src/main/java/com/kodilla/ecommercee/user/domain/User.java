@@ -42,4 +42,10 @@ public class User {
             mappedBy = "user",
             fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
+
+    public User(String userName, String status, Long userKey) {
+        this.userName = userName;
+        this.status = status;
+        this.userKey = userKey;
+    }
 }
