@@ -8,11 +8,14 @@ import com.kodilla.ecommercee.order.repository.OrderRepository;
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.exception.ProductNotFoundException;
 import com.kodilla.ecommercee.product.repository.ProductRepository;
+import com.kodilla.ecommercee.user.domain.User;
 import com.kodilla.ecommercee.user.exception.UserNotFoundException;
 import com.kodilla.ecommercee.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -51,26 +54,45 @@ public class CartService {
         return cart;
     }
 
+    @Transactional
     public Cart deleteItemFromCart(Long productId, Long cartId) throws CartNotFoundException, ProductNotFoundException {
-        Cart cart = findCartUsingId(cartId);
-        Product product = findProductUsingProductId(productId);
-        List<Product> productList = cart.getProductList();
-        List<Cart> cartList = product.getCartList();
-        cartList.remove(cart);
-        productList.remove(product);
-        cart.setProductList(productList);
-        product.setCartList(cartList);
-        cartRepository.save(cart);
-        productRepository.save(product);
-        return cart;
+        Cart selectedCart = findCartUsingId(cartId);
+        Product selectedProduct = findProductUsingProductId(productId);
+
+        List<Product> productList = new ArrayList<>();
+        productList.add(selectedProduct);
+
+        List<Cart> cartList = new ArrayList<>();
+        cartList.add(selectedCart);
+
+        selectedCart.getProductList().removeAll(productList);
+        selectedProduct.getCartList().removeAll(cartList);
+
+        cartRepository.save(selectedCart);
+        productRepository.save(selectedProduct);
+        return selectedCart;
     }
 
+    @Transactional
     public void createOrder(Long cartId, String description) throws CartNotFoundException {
         Order order = new Order();
         order.setOrderDescription(description);
-        order.setProductList(findCartUsingId(cartId).getProductList());
-        order.setUser(findCartUsingId(cartId).getUser());
+
+        Cart selectedCart = findCartUsingId(cartId);
+
+        List<Product> productList = selectedCart.getProductList();
+        productList.forEach(product -> product.getOrderList().add(order));
+
+        order.getProductList().addAll(productList);
+
+        User user = selectedCart.getUser();
+        user.getOrders().add(order);
+
+        order.setUser(user);
+
+        userRepository.save(user);
         orderRepository.save(order);
+        productRepository.saveAll(productList);
     }
 
     private Cart findCartUsingId(Long cartId) throws CartNotFoundException {
