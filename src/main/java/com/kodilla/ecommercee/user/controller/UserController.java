@@ -9,6 +9,7 @@ import com.kodilla.ecommercee.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Random;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -40,5 +41,15 @@ public class UserController {
         User user = userService.getUser(userId).orElseThrow(UserNotFoundException::new);
         user.setUserKey((long) new Random().nextInt(100000));
         return userService.saveUser(user).getUserId();
+    }
+
+    @GetMapping(path = "/getUser")
+    public UserDto getUser(@RequestParam Long userId) throws UserNotFoundException {
+        return userMapper.mapUserToUserDto(userService.getUser(userId).orElseThrow(UserNotFoundException::new));
+    }
+
+    @GetMapping(path = "/getUsers")
+    public List<UserDto> getUsers() {
+        return userMapper.mapUsersListToProductDtosList(userService.getUsers());
     }
 }
