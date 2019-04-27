@@ -14,9 +14,6 @@ public class GroupService {
     @Autowired
     private GroupRepository groupRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
-
     public List<Group> getGroupList() {
         return groupRepository.findAll();
     }
@@ -25,11 +22,8 @@ public class GroupService {
         return groupRepository.findById(groupId);
     }
 
-    public void createGroup() {
-
+    public Group saveGroup(Group group) {
+        return groupRepository.save(group);
     }
 
-    public void updateGroup() {
-
-    }
 }

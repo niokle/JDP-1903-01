@@ -4,19 +4,14 @@ import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.cart.dto.CartDto;
 import com.kodilla.ecommercee.cart.exception.CartNotFoundException;
 import com.kodilla.ecommercee.cart.repository.CartRepository;
-import com.kodilla.ecommercee.order.domain.Order;
 import com.kodilla.ecommercee.order.repository.OrderRepository;
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.dto.ProductDto;
 import com.kodilla.ecommercee.product.exception.ProductNotFoundException;
 import com.kodilla.ecommercee.product.repository.ProductRepository;
 import com.kodilla.ecommercee.user.domain.User;
-import com.kodilla.ecommercee.user.dto.UserDto;
 import com.kodilla.ecommercee.user.exception.UserNotFoundException;
 import com.kodilla.ecommercee.user.repository.UserRepository;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -25,8 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.awt.event.ComponentListener;
-import java.net.UnknownServiceException;
 import java.util.ArrayList;
 import java.util.List;
 
