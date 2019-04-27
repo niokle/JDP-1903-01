@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class GroupControllerTest {
@@ -33,8 +35,8 @@ public class GroupControllerTest {
     @Test
     public void testGetGroups() {
         //Given
-        Group testGroup1 = new Group(1l, "TestGroup1", "Test1", new ArrayList<>());
-        Group testGroup2 = new Group(2L, "TestGroup2", "Test2", new ArrayList<>());
+        Group testGroup1 = new Group("TestGroup1", "Test1");
+        Group testGroup2 = new Group("TestGroup2", "Test2");
         groupRepository.save(testGroup1);
         groupRepository.save(testGroup2);
         //when
@@ -42,8 +44,8 @@ public class GroupControllerTest {
         //then
         Assert.assertEquals(2, groups.size());
         //CleanUp
-        groupRepository.delete(testGroup1);
-        groupRepository.delete(testGroup2);
+        groupRepository.deleteById(testGroup1.getGroupId());
+        groupRepository.deleteById(testGroup2.getGroupId());
     }
 
     @Test
@@ -61,18 +63,16 @@ public class GroupControllerTest {
             LOGGER.info("TEST OK");
         } catch (GroupNotFoundException e) {
             LOGGER.error("TestFailed");
-        } finally {
-            groupRepository.delete(testGroup1);
         }
+        groupRepository.delete(testGroup1);
     }
-
 
     @Test
     public void createGroup() {
         //Given
         GroupDto testGroupDto1 = new GroupDto(1l, "TestGroup1", "Test1", new ArrayList<>());
         //When
-        groupController.createGroup(testGroupDto1);
+        Long groupId = groupController.createGroup(testGroupDto1);
         //Then
         try {
             GroupDto groupDto = groupController.getGroup(testGroupDto1.getGroupId());
@@ -81,7 +81,7 @@ public class GroupControllerTest {
         } catch (GroupNotFoundException e) {
             LOGGER.error("TestFailed");
         } finally {
-            groupRepository.deleteAll();
+            groupRepository.deleteById(groupId);
         }
     }
 
@@ -93,15 +93,15 @@ public class GroupControllerTest {
         //When
         groupRepository.save(testGroup1);
         //Then
-        groupController.updateGroup(testGroupDto1);
+        GroupDto groupDto1 = groupController.updateGroup(testGroupDto1);
         try {
-            GroupDto groupDto = groupController.getGroup(testGroupDto1.getGroupId());
+            GroupDto groupDto = groupController.getGroup(testGroup1.getGroupId());
             assertEquals("TestGroup2", groupDto.getName());
             LOGGER.info("TEST OK");
         } catch (GroupNotFoundException e) {
             LOGGER.error("Test failed");
         } finally {
-            groupRepository.deleteAll();
+            groupRepository.deleteById(groupDto1.getGroupId());
         }
     }
 }
